@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
+using Dapper;
 
 namespace InventoryManagement
 {
@@ -25,21 +26,23 @@ namespace InventoryManagement
                 Console.WriteLine("Please select one of the following.");
                 Console.WriteLine("1. Search Product");
                 Console.WriteLine("2. Add/Remove Product");
-                Console.WriteLine("3. Customer Look-UpdateRowSource");
+                Console.WriteLine("3. Employee Look-Up");
                 Console.WriteLine("4. Log-out");
 
-                if (int.TryParse(Console.ReadLine(), out int menuSelection))
+               // if (int.TryParse(Console.ReadLine(), out int menuSelection))
+               int menuSelection = 1;
                    {
                         switch (menuSelection)
                             {
                                 case 1:
                                     SearchProduct();
+                                    Console.WriteLine("");
                                     break;
                                 case 2:
                                     AddRemoveProduct();
                                     break;
                                 case 3:
-                                    CustomerLookup();
+                                    EmployeeLookup();
                                     break;
                                 case 4:
                                     Console.WriteLine("Logging out...");
@@ -50,7 +53,7 @@ namespace InventoryManagement
                                     break;
                             }
                     }
-                 else
+                // else
                      {
                         Console.WriteLine("Invalid input. Please enter a number.");
                      }
@@ -58,26 +61,35 @@ namespace InventoryManagement
 
         }
 
-        public static string SearchProduct()
+        public static void SearchProduct()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["connectDB"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            return "nada";
-            
+
+          Console.WriteLine("Please enter the product name: "); 
+          //string? productName = Console.ReadLine();
+           string productName = "Sofa";
+          
+          if(!string.IsNullOrWhiteSpace(productName))
+          {
+            DataAccess db = new();
+            List<Product> result = db.GetProduct(productName); 
+                 
+          }    
+          else
+          {
+            Console.WriteLine("Please enter a Product Name");
+            throw new Exception();
+          }
+ 
         }
 
         public static string AddRemoveProduct()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["connectDB"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            return "nada";
+            throw new NotImplementedException();
         }
 
-        public static string CustomerLookup()
+        public static string EmployeeLookup()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["connectDB"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            return "nada";
+            throw new NotImplementedException();
         }
 
 

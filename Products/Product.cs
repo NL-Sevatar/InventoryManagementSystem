@@ -1,15 +1,15 @@
 using System;
 
-namespace Product
+namespace InventoryManagement
 {
-public class Products
+public class Product
 {
-    public int Productid {get;set;}
-    public string? Productname {get;set;}
-    public string? Productclass {get;set;}
+    public int ProductID {get;set;}
+    public string? ProductName {get;set;}
+    public string? ProductClass {get;set;}
 }
 
-public class Electronics : Products
+public class Electronics : Product
 {
 
 }
