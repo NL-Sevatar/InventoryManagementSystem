@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
 using Dapper;
+using System.Globalization;
 
 namespace InventoryManagement
 {
@@ -29,8 +30,7 @@ namespace InventoryManagement
                 Console.WriteLine("3. Employee Look-Up");
                 Console.WriteLine("4. Log-out");
 
-               // if (int.TryParse(Console.ReadLine(), out int menuSelection))
-               int menuSelection = 1;
+                if (int.TryParse(Console.ReadLine(), out int menuSelection))
                    {
                         switch (menuSelection)
                             {
@@ -53,7 +53,7 @@ namespace InventoryManagement
                                     break;
                             }
                     }
-                // else
+                 else
                      {
                         Console.WriteLine("Invalid input. Please enter a number.");
                      }
@@ -65,13 +65,28 @@ namespace InventoryManagement
         {
 
           Console.WriteLine("Please enter the product name: "); 
-          //string? productName = Console.ReadLine();
-           string productName = "Sofa";
+          string? productName = Console.ReadLine();
           
           if(!string.IsNullOrWhiteSpace(productName))
           {
             DataAccess db = new();
-            List<Product> result = db.GetProduct(productName); 
+            List<Product> productList = db.GetProduct(productName); 
+        
+                 if (productList.Count > 0)
+                {
+                    foreach (Product product in productList)
+                    {
+                        Console.WriteLine($"ProductID: {product.ProductID}");
+                        Console.WriteLine($"Product Name: {product.ProductName}");
+                        Console.WriteLine($"Product Class: {product.ProductClass}");
+                        Console.WriteLine("");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No products found with the given name.");
+                }
+                
                  
           }    
           else
@@ -84,6 +99,27 @@ namespace InventoryManagement
 
         public static string AddRemoveProduct()
         {
+            Console.WriteLine("Are we adding or Removing an Product");
+            Console.WriteLine("1. Add Product");
+            Console.WriteLine("2. Remove Product");
+            
+            int addRemove = Convert.ToInt32(Console.ReadLine());
+
+            switch (addRemove)
+            {
+                case 1: 
+                    DataAccess.AddProduct();
+                    break;
+                case 2:
+                   // DataAccess RemoveProduct();
+                    break;
+            }
+
+
+            DataAccess db = new();
+            db.AddProduct(productID, productName, productClass);
+
+
             throw new NotImplementedException();
         }
 

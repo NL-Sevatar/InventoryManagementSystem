@@ -1,6 +1,7 @@
 using Dapper;
 using System.Configuration;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
  
 
@@ -29,8 +30,9 @@ namespace InventoryManagement
     {
         public List<Product> GetProduct(string ProductName)
         {
-            using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
-            connection.Open();
+           using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
+           connection.Open();
+           
             if (connection.State == ConnectionState.Open)
             {
                 return connection.Query<Product>($"select * from Product where ProductName = '{ProductName}'").ToList();
@@ -40,6 +42,28 @@ namespace InventoryManagement
                 Console.WriteLine("Failed Connection");
                 throw new Exception();
             }
+        }
+
+        public static void AddProduct()
+        {
+            using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
+           connection.Open();
+           
+            if (connection.State == ConnectionState.Open)
+            {
+                return connection.Query<Product>;
+            }
+            else
+            {
+                Console.WriteLine("Failed Connection");
+                throw new Exception();
+            }
+
+        }
+
+        public static void RemoveProduct()
+        {
+
         }
     }
 }
