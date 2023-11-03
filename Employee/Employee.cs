@@ -2,8 +2,10 @@ namespace InventoryManagement
 {
     public class Employee
     {
-        string? FName {get;set;}
-        string? LName {get;set;}
         int EmployeeID {get;set;}
+        string? Firstname {get;set;}
+        string? Lastname {get;set;}
+        string? Title {get;set;}
+        string? Department {get;set;}
     }
 }

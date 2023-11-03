@@ -85,9 +85,7 @@ namespace InventoryManagement
                 else
                 {
                     Console.WriteLine("No products found with the given name.");
-                }
-                
-                 
+                }        
           }    
           else
           {
@@ -97,8 +95,10 @@ namespace InventoryManagement
  
         }
 
-        public static string AddRemoveProduct()
+        public static void AddRemoveProduct()
         {
+            DataAccess db = new();
+
             Console.WriteLine("Are we adding or Removing an Product");
             Console.WriteLine("1. Add Product");
             Console.WriteLine("2. Remove Product");
@@ -108,24 +108,48 @@ namespace InventoryManagement
             switch (addRemove)
             {
                 case 1: 
-                    DataAccess.AddProduct();
+                   
+                    Console.WriteLine("Enter ProductID");
+                    int productID = Convert.ToInt32(Console.ReadLine());
+
+                    
+                    Console.WriteLine("Enter ProductName");
+                    string productName = Console.ReadLine();
+
+                    
+                    Console.WriteLine("Enter ProductClass");
+                    string productClass = Console.ReadLine();
+
+                    
+                    Console.WriteLine("Enter ProductQuanity");
+                    int productQuanity= Convert.ToInt32(Console.ReadLine());
+
+                    db.AddProduct(productID, productName, productClass, productQuanity);
                     break;
                 case 2:
-                   // DataAccess RemoveProduct();
+
+                   Console.WriteLine("Please enter your ProductID to be removed from the system.");
+                   productID = Convert.ToInt32(Console.ReadLine()); 
+                   db.RemoveProduct(productID);
+
                     break;
             }
-
-
-            DataAccess db = new();
-            db.AddProduct(productID, productName, productClass);
-
-
-            throw new NotImplementedException();
         }
 
-        public static string EmployeeLookup()
+        public static void EmployeeLookup()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Please enter last name");
+            string lastName = Console.ReadLine();
+            DataAccess db = new();
+
+            if (lastName != null)
+            {
+                db.EmployeeSearch(lastName);
+            }
+            else 
+            {
+                Console.WriteLine("Please enter a valid last name");
+            }
         }
 
 

@@ -10,7 +10,7 @@ namespace InventoryManagement
 
     public static class Helper
     {
-        public static string CnnVal(string name)
+        public static string CnnVal(string name) 
         {
             string connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
             
@@ -44,14 +44,14 @@ namespace InventoryManagement
             }
         }
 
-        public static void AddProduct()
+        public void AddProduct(int productID, string productName, string productClass, int productQuanity )
         {
             using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
            connection.Open();
            
             if (connection.State == ConnectionState.Open)
             {
-                return connection.Query<Product>;
+               connection.Execute($"INSERT INTO dbo.Product (ProductID, Productname, Productclass, Productquanity) VALUES ({productID}, '{productName}', '{productClass}', {productQuanity})");
             }
             else
             {
@@ -61,9 +61,37 @@ namespace InventoryManagement
 
         }
 
-        public static void RemoveProduct()
+        public void RemoveProduct(int productID)
         {
+            using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
+            connection.Open();
 
+            if (connection.State == ConnectionState.Open)
+            {
+               connection.Execute($"DELETE FROM  dbo.Product WHERE ProductID = {productID}");
+            }
+            else
+            {
+                Console.WriteLine("Failed Connection");
+                throw new Exception();
+            }
         }
+
+        public void EmployeeSearch (string Lastname)
+        {
+            using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
+            connection.Open();
+
+            if (connection.State == ConnectionState.Open)
+            {
+               connection.Execute($"SELECT * from dbo.Employee WHERE LastName ={Lastname}");
+            }
+            else
+            {
+                Console.WriteLine("Failed Connection");
+                throw new Exception();
+            }
+        }
+
     }
 }
