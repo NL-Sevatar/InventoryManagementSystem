@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using Dapper;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace InventoryManagement
 {
@@ -14,7 +15,49 @@ namespace InventoryManagement
     {   
         public static void Main()
         {
+            login();
             MainMenu();
+        }
+
+        public static void login()
+        {
+            bool isAuthenticated = false;
+            while (!isAuthenticated)
+            {
+                Console.WriteLine("Please enter username");
+                string? userName = Console.ReadLine();
+                if (userName != null)
+                {
+                    continue;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter your username.");
+                }
+
+                Console.WriteLine("Please enter your password");
+                string? password = Console.ReadLine();
+                if (password != null)
+                {
+                    string hashedPassword = Security.HashPassword(password);
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid password.");
+                }
+                
+                
+            }
+
+            if (isAuthenticated)
+            {
+                Console.WriteLine($"Welcome");
+            }
+            else
+            {
+                Console.WriteLine("Invalid Username or Password. Please try again.");
+            }
+            
         }
 
         public static void MainMenu()
@@ -114,11 +157,11 @@ namespace InventoryManagement
 
                     
                     Console.WriteLine("Enter ProductName");
-                    string productName = Console.ReadLine();
+                    string? productName = Console.ReadLine();
 
                     
                     Console.WriteLine("Enter ProductClass");
-                    string productClass = Console.ReadLine();
+                    string? productClass = Console.ReadLine();
 
                     
                     Console.WriteLine("Enter ProductQuanity");
@@ -139,7 +182,7 @@ namespace InventoryManagement
         public static void EmployeeLookup()
         {
             Console.WriteLine("Please enter last name");
-            string lastName = Console.ReadLine();
+            string? lastName = Console.ReadLine();
             DataAccess db = new();
 
             if (lastName != null)
