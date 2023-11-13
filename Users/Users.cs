@@ -1,6 +1,8 @@
 class User
 {
-    public string Username {get;set;}
-    public string Password {get;set;}
-    public string Salt {get;set;}
+    public string user_id {get;set;}
+    public string username {get;set;}
+    public string password {get;set;}
+    public string salt {get;set;}
+    public string role {get; set;}
 }

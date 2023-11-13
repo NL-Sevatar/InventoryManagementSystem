@@ -2,7 +2,6 @@
 using System.Configuration;
 using System.Collections.Specialized;
 using System.Data;
-using System.Linq;
 using System.Data.SqlClient;
 using System.Reflection;
 using Dapper;
@@ -201,4 +200,3 @@ namespace InventoryManagement
 
 
 }
-
