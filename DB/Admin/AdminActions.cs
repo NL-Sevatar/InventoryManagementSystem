@@ -3,42 +3,45 @@ using InventoryManagement;
 
 class AdminActions
 {
-    private static void CreateUser()
+    internal static void CreateUser()
     {
-         DataAccess db = new();
+        List<string> validRoles = new List<string> { "admin", "user", "sales"};
+
+        DataAccess db = new();
+        string userId = GenerateUserId();
 
         Console.Write("Please enter desired username: ");
-        string? firstName = Console.ReadLine();
+        string? userName = Console.ReadLine();
 
-        Console.Write("Please enter user password");
-        string password = Console.ReadLine();
-        string verifyPassword;
+        string password = Security.GenerateNewPassword();
 
-        if (verifyPassword != password)
+        Console.WriteLine("Which Role will the user have?");
+        string? role = Console.ReadLine().ToLower();
+
+        if (!validRoles.Contains(role))
         {
-            Console.Write("Please renter user password.");
-            verifyPassword = Console.ReadLine();
+            Console.WriteLine("Please enter a valid role. Admin, User, or Sales.");
         }
         else
         {
-            int salt = db.GenerateSalt();
+            db.NewUser(userId, userName, password);
         }
         
-        
-         using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
-           connection.Open();
-           
-            if (connection.State == ConnectionState.Open)
-            {
-                return connection.Query<User>($"");
-            }
-            else
-            {
-                Console.WriteLine("Failed Connection");
-                throw new Exception();
-            }
+        Console.WriteLine($"New user {userName} successfully created");
+    }
 
 
-        Console.WriteLine("$"New user {userName} successfully created");
+    static int userIdCounter = 0;
+
+    internal static string GenerateUserId()
+    {
+       
+
+        string prefix = "EMP";
+        int currentCounter = System.Threading.Interlocked.Increment(ref userIdCounter);
+
+        string userId = $"{prefix}{currentCounter:D5}";
+
+        return userId;
     }
 }

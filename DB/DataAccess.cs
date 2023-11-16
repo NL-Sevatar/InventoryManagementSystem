@@ -51,7 +51,7 @@ namespace InventoryManagement
            
             if (connection.State == ConnectionState.Open)
             {
-               connection.Execute($"INSERT INTO dbo.Product (ProductID, Productname, Productclass, Productquanity) VALUES ({productID}, '{productName}', '{productClass}', {productQuanity})");
+               connection.Execute($"INSERT INTO dbo.Product (product_id, product_name, product_class, product_quanity) VALUES ({productID}, '{productName}', '{productClass}', {productQuanity})");
             }
             else
             {
@@ -61,14 +61,14 @@ namespace InventoryManagement
 
         }
 
-        public void RemoveProduct(int productID)
+        public void RemoveProduct(int product_id)
         {
             using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
             connection.Open();
 
             if (connection.State == ConnectionState.Open)
             {
-               connection.Execute($"DELETE FROM  dbo.Product WHERE ProductID = {productID}");
+               connection.Execute($"DELETE FROM  dbo.Product WHERE ProductID = {product_id}");
             }
             else
             {
@@ -84,7 +84,7 @@ namespace InventoryManagement
 
             if (connection.State == ConnectionState.Open)
             {
-               connection.Execute($"SELECT * from dbo.Employee WHERE LastName ={Lastname}");
+               connection.Execute($"SELECT * from dbo.Employee WHERE last_name ={Lastname}");
             }
             else
             {
@@ -92,6 +92,22 @@ namespace InventoryManagement
                 throw new Exception();
             }
         }
+         internal void NewUser(string user_id, string username, string HashPassword, string role)
+         {
+            using IDbConnection connection = new System.Data.SqlClient.SqlConnection(Helper.CnnVal("connectDB"));
+           connection.Open();
+           
+            if (connection.State == ConnectionState.Open)
+            {
+                connection.Execute($"INSERT INTO dbo.User () ");
+                
+            }
+            else
+            {
+                Console.WriteLine("Failed Connection");
+                throw new Exception();
+            }
+         }
 
     }
 }

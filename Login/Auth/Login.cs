@@ -6,7 +6,7 @@ namespace InventoryManagement
     class Security
     {
 
-    static string HashPassword(string password)
+    internal static string HashPassword(string password)
     {
         using (var sha256 = SHA256.Create())
         {
@@ -37,16 +37,40 @@ namespace InventoryManagement
         throw new NotImplementedException();
     }
 
-    static string GenerateSalt()
+    internal static string GenerateSalt()
     {
         byte[] saltBytes = new byte[16];
-        using (var rng = new RNGCrptoServiceProvider())
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
         {
             rng.GetBytes(saltBytes);
         }
 
         return Convert.ToBase64String(saltBytes);
     }
+
+    internal static string GenerateNewPassword()
+    {
+        Console.Write("Please enter user password");
+        string? password = Console.ReadLine();
+        string? verifyPassword = "someunuseable password outside the scope.";
+
+        if (verifyPassword != password)
+        {
+            Console.Write("Please renter user password.");
+            verifyPassword = Console.ReadLine();
+        }
+        else
+        {
+            string salt = Security.GenerateSalt();
+            string newPassword = HashPassword(password, salt);
+            Console.WriteLine($"{newPassword}");
+            return newPassword;
+        }     
+    }
+  /*   internal static string RetrieveSalt()
+    {
+        throw new Exception NotImplementedException;
+    } */
 
     }
 }
